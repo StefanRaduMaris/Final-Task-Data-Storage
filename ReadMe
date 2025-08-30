@@ -1,0 +1,6 @@
+## Task
+
+In this exercise we need to read information from a csv file and with that information we will make some requests to an API to recive some extra data that we want.
+
+The result is a bigger data base with information.
+The result is xml.file because we are learning that .
