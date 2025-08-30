@@ -8,7 +8,6 @@ from time import *
 
 def searching_information_in_api(title,year,plot='full'):
 
-
     apikey='265f92cf'
     search_parameters = {
         't':title,
@@ -32,7 +31,6 @@ def searching_information_in_api(title,year,plot='full'):
 
         elif reponse.status_code == 200:
             
-           
             actors_found = ''
             rating_found = ''
             votes_found = '' 
@@ -117,5 +115,9 @@ for index,row in d.iterrows():
         d.at[index,'Votes'] = data_receive_from_api['votes_found']
     else:
         d.at[index,'Votes'] = ' '
-d.to_xml('Movies.xml', parser='etree', row_name='Movie', index=True,
+
+#we sort after rating values and we are taking just 10 items 
+d['Rating_num'] = pd.to_numeric(d['Rating'],errors = 'coerce')
+d_sort=d.sort_values(by='Rating_num',ascending=False).head(10)
+d_sort.to_xml('Movies.xml', parser='etree', row_name='Movie', index=False,
           elem_cols=['title', 'release_year', 'genre', 'director', 'country', 'duration','Actors', 'Rating', 'Votes'])
